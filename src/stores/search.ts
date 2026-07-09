@@ -51,7 +51,8 @@ export const useSearchStore = defineStore(
     persist: {
       pick: ['criteria', 'offers'],
       afterHydrate: (ctx) => {
-        ctx.store.status = ctx.store.offers.length > 0 ? 'success' : 'idle'
+        ctx.store.status =
+          ctx.store.offers.length > 0 ? 'success' : ctx.store.criteria ? 'empty' : 'idle'
       },
     },
   },

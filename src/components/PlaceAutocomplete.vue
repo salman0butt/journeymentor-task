@@ -43,9 +43,13 @@ watch(
 )
 
 function onInput(value: string) {
-  query.value = value
-  if (value.trim().length >= 2) fetchSuggestions(value.trim())
-  else {
+  query.value = value // display exactly what was typed
+  const code = value.trim().toUpperCase()
+  lastEmitted = code
+  emit('update:modelValue', code)
+  if (value.trim().length >= 2) {
+    fetchSuggestions(value.trim())
+  } else {
     suggestions.value = []
     open.value = false
   }
