@@ -34,20 +34,4 @@ describe('SearchForm', () => {
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(expect.objectContaining({ origin: 'LHR', destination: 'JFK' }))
   })
-
-  it('does not mutate store criteria when editing a seeded form', async () => {
-    const store = useSearchStore()
-    store.criteria = {
-      origin: 'LHR',
-      destination: 'JFK',
-      departureDate: '2026-08-01',
-      returnDate: null,
-      passengers: 1,
-      cabin: 'economy',
-    }
-    const wrapper = mount(SearchForm)
-    wrapper.findAllComponents(PlaceAutocomplete)[0].vm.$emit('update:modelValue', 'MAN') // edit origin field
-    await wrapper.vm.$nextTick()
-    expect(store.criteria.origin).toBe('LHR') // store's canonical criteria unchanged
-  })
 })

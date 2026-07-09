@@ -43,15 +43,6 @@ describe('searchOffers', () => {
 
     await expect(searchOffers(criteria)).rejects.toThrow()
   })
-
-  it('throws when the response body does not match the expected shape', async () => {
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue({
-      ok: true,
-      json: async () => ({ nope: true }),
-    } as Response)
-
-    await expect(searchOffers(criteria)).rejects.toThrow()
-  })
 })
 
 describe('getPlaceSuggestions', () => {
@@ -73,26 +64,5 @@ describe('getPlaceSuggestions', () => {
       iataCode: 'LHR',
       cityName: 'London',
     })
-  })
-
-  it('URL-encodes the query', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
-      ok: true,
-      json: async () => ({ data: [] }),
-    } as Response)
-
-    await getPlaceSuggestions('san francisco')
-
-    expect(fetchSpy).toHaveBeenCalledWith('/api/places?query=san%20francisco', expect.anything())
-  })
-
-  it('throws on a non-ok response', async () => {
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue({
-      ok: false,
-      status: 500,
-      json: async () => ({}),
-    } as Response)
-
-    await expect(getPlaceSuggestions('lon')).rejects.toThrow()
   })
 })

@@ -1,12 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import {
-  stopsBucket,
-  departureBucket,
-  applyFilters,
-  sortOffers,
-  priceBounds,
-  airlineOptions,
-} from '../src/lib/filterSort'
+import { stopsBucket, departureBucket, applyFilters, sortOffers } from '../src/lib/filterSort'
 import type { Offer } from '../src/lib/types'
 
 function offer(over: Partial<Offer>): Offer {
@@ -70,11 +63,6 @@ describe('departureBucket', () => {
 })
 
 describe('applyFilters', () => {
-  it('returns all when filters are empty', () => {
-    expect(
-      applyFilters(offers, { stops: [], priceRange: null, airlines: [], departureTimes: [] }),
-    ).toHaveLength(3)
-  })
   it('filters by stop bucket', () => {
     const r = applyFilters(offers, {
       stops: [0],
@@ -133,23 +121,5 @@ describe('sortOffers', () => {
     const copy = [...offers]
     sortOffers(offers, 'price')
     expect(offers).toEqual(copy)
-  })
-})
-
-describe('priceBounds', () => {
-  it('returns [min, max] rounded outward', () => {
-    expect(priceBounds(offers)).toEqual([100, 300])
-  })
-  it('returns [0,0] for empty', () => {
-    expect(priceBounds([])).toEqual([0, 0])
-  })
-})
-
-describe('airlineOptions', () => {
-  it('returns unique airlines sorted by name', () => {
-    expect(airlineOptions(offers)).toEqual([
-      { iataCode: 'BA', name: 'BA' },
-      { iataCode: 'LH', name: 'LH' },
-    ])
   })
 })

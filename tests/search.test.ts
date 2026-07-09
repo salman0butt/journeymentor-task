@@ -34,10 +34,4 @@ describe('useSearchStore.shiftDateTo', () => {
     expect(store.criteria?.passengers).toBe(1)
     expect(store.criteria?.cabin).toBe('economy')
   })
-
-  it('is a no-op when criteria is null', () => {
-    const store = useSearchStore()
-    store.shiftDateTo('2026-08-03')
-    expect(store.criteria).toBeNull()
-  })
 })

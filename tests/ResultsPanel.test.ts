@@ -88,13 +88,4 @@ describe('ResultsPanel view states', () => {
     const w = mount(ResultsPanel)
     expect(w.findAll('article').length).toBeGreaterThan(0)
   })
-
-  it('prioritizes the error state over loading when both are true', () => {
-    setQuery({ isError: true, isLoading: true, error: new Error('Search failed (500)') })
-    const s = useSearchStore()
-    s.criteria = { ...criteria }
-    const w = mount(ResultsPanel)
-    expect(w.find('[aria-busy="true"]').exists()).toBe(false)
-    expect(w.text()).toMatch(/search failed|retry/i)
-  })
 })

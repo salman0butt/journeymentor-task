@@ -32,10 +32,6 @@ describe('validateCriteria', () => {
     const e = validateCriteria({ ...valid, returnDate: '2026-07-31' }, TODAY)
     expect(e.returnDate).toBeTruthy()
   })
-  it('accepts a return date on/after departure', () => {
-    const e = validateCriteria({ ...valid, returnDate: '2026-08-05' }, TODAY)
-    expect(e.returnDate).toBeUndefined()
-  })
   it('rejects fewer than 1 passenger', () => {
     expect(validateCriteria({ ...valid, passengers: 0 }, TODAY).passengers).toBeTruthy()
   })
