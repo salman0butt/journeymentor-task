@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SearchForm from './components/SearchForm.vue'
 import ResultsPanel from './components/ResultsPanel.vue'
+import DateWindow from './components/DateWindow.vue'
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import ResultsPanel from './components/ResultsPanel.vue'
     </header>
     <main class="mx-auto max-w-5xl px-4 py-6">
       <SearchForm />
+      <DateWindow class="mt-4" />
       <ResultsPanel class="mt-6" />
     </main>
   </div>

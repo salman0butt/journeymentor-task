@@ -34,3 +34,14 @@ export function formatDayLabel(date: string): string {
   const d = new Date(`${date}T00:00:00Z`)
   return `${WEEKDAYS[d.getUTCDay()]} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`
 }
+
+export function dayWindow(center: string, radius: number): string[] {
+  const base = new Date(`${center}T00:00:00Z`)
+  const days: string[] = []
+  for (let offset = -radius; offset <= radius; offset++) {
+    const d = new Date(base)
+    d.setUTCDate(base.getUTCDate() + offset)
+    days.push(d.toISOString().slice(0, 10))
+  }
+  return days
+}
