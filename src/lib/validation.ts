@@ -1,3 +1,4 @@
+import { makeCriteriaSchema } from './schemas'
 import type { SearchCriteria } from './types'
 
 export interface ValidationErrors {
@@ -9,19 +10,15 @@ export interface ValidationErrors {
 }
 
 export function validateCriteria(c: SearchCriteria, today: string): ValidationErrors {
-  const e: ValidationErrors = {}
-  if (!c.origin) e.origin = 'Select an origin'
-  if (!c.destination) e.destination = 'Select a destination'
-  if (c.origin && c.destination && c.origin === c.destination) {
-    e.destination = 'Origin and destination must differ'
+  const result = makeCriteriaSchema(today).safeParse(c)
+  if (result.success) return {}
+
+  const errors: ValidationErrors = {}
+  for (const issue of result.error.issues) {
+    const field = issue.path[0] as keyof ValidationErrors | undefined
+    if (field && errors[field] === undefined) errors[field] = issue.message
   }
-  if (!c.departureDate) e.departureDate = 'Select a departure date'
-  else if (c.departureDate < today) e.departureDate = 'Departure cannot be in the past'
-  if (c.returnDate && c.departureDate && c.returnDate < c.departureDate) {
-    e.returnDate = 'Return cannot be before departure'
-  }
-  if (c.passengers < 1) e.passengers = 'At least one passenger'
-  return e
+  return errors
 }
 
 export function hasErrors(e: ValidationErrors): boolean {
