@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, computed } from 'vue'
-import PlaceInput from './PlaceInput.vue'
+import PlaceAutocomplete from './PlaceAutocomplete.vue'
 import PassengerStepper from './PassengerStepper.vue'
 import CabinSelect from './CabinSelect.vue'
 import { useSearchStore } from '../stores/search'
@@ -44,8 +44,13 @@ function submit() {
 <template>
   <form class="rounded-2xl bg-white p-4 shadow-sm sm:p-6" @submit.prevent="submit">
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <PlaceInput v-model="form.origin" label="From" placeholder="LHR" :error="displayErrors.origin" />
-      <PlaceInput v-model="form.destination" label="To" placeholder="JFK" :error="displayErrors.destination" />
+      <PlaceAutocomplete v-model="form.origin" label="From" placeholder="LHR" :error="displayErrors.origin" />
+      <PlaceAutocomplete
+        v-model="form.destination"
+        label="To"
+        placeholder="JFK"
+        :error="displayErrors.destination"
+      />
       <label class="flex flex-col gap-1">
         <span class="text-sm font-medium text-slate-700">Departure</span>
         <input v-model="form.departureDate" type="date" class="rounded-lg border border-slate-300 px-3 py-2" />
