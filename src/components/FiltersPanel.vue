@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useFiltersStore } from '../stores/filters'
-import { priceBounds, airlineOptions } from '../lib/filterSort'
+import { priceBounds, airlineOptions, type DepartureBucket } from '../lib/filterSort'
 import type { Offer } from '../lib/types'
 
 const props = defineProps<{ offers: Offer[] }>()
@@ -14,6 +14,12 @@ const stopOptions: { value: 0 | 1 | 2; label: string }[] = [
   { value: 1, label: '1 stop' },
   { value: 2, label: '2+ stops' },
 ]
+const departureTimeOptions: { value: DepartureBucket; label: string }[] = [
+  { value: 'morning', label: 'Morning (05–12)' },
+  { value: 'afternoon', label: 'Afternoon (12–17)' },
+  { value: 'evening', label: 'Evening (17–21)' },
+  { value: 'night', label: 'Night (21–05)' },
+]
 
 function toggleStop(v: 0 | 1 | 2) {
   filters.stops = filters.stops.includes(v)
@@ -24,6 +30,11 @@ function toggleAirline(code: string) {
   filters.airlines = filters.airlines.includes(code)
     ? filters.airlines.filter((a) => a !== code)
     : [...filters.airlines, code]
+}
+function toggleDepartureTime(bucket: DepartureBucket) {
+  filters.departureTimes = filters.departureTimes.includes(bucket)
+    ? filters.departureTimes.filter((b) => b !== bucket)
+    : [...filters.departureTimes, bucket]
 }
 const maxPrice = computed({
   get: () => filters.priceRange?.[1] ?? bounds.value[1],
@@ -40,6 +51,21 @@ const maxPrice = computed({
           type="checkbox"
           :checked="filters.stops.includes(o.value)"
           @change="toggleStop(o.value)"
+        />
+        {{ o.label }}
+      </label>
+    </div>
+    <div>
+      <h3 class="mb-2 text-sm font-semibold">Departure time</h3>
+      <label
+        v-for="o in departureTimeOptions"
+        :key="o.value"
+        class="flex items-center gap-2 py-0.5 text-sm"
+      >
+        <input
+          type="checkbox"
+          :checked="filters.departureTimes.includes(o.value)"
+          @change="toggleDepartureTime(o.value)"
         />
         {{ o.label }}
       </label>

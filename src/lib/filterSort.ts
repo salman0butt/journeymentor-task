@@ -4,10 +4,21 @@ export function stopsBucket(stops: number): 0 | 1 | 2 {
   return stops >= 2 ? 2 : (stops as 0 | 1)
 }
 
+export type DepartureBucket = 'morning' | 'afternoon' | 'evening' | 'night'
+
+export function departureBucket(iso: string): DepartureBucket {
+  const h = Number(iso.slice(11, 13))
+  if (h >= 5 && h < 12) return 'morning'
+  if (h >= 12 && h < 17) return 'afternoon'
+  if (h >= 17 && h < 21) return 'evening'
+  return 'night'
+}
+
 export interface FilterCriteria {
   stops: Array<0 | 1 | 2>
   priceRange: [number, number] | null
   airlines: string[]
+  departureTimes: DepartureBucket[]
 }
 
 export function applyFilters(offers: Offer[], f: FilterCriteria): Offer[] {
@@ -16,6 +27,8 @@ export function applyFilters(offers: Offer[], f: FilterCriteria): Offer[] {
     if (f.priceRange && (o.price.amount < f.priceRange[0] || o.price.amount > f.priceRange[1]))
       return false
     if (f.airlines.length > 0 && !f.airlines.includes(o.airline.iataCode)) return false
+    if (f.departureTimes.length > 0 && !f.departureTimes.includes(departureBucket(o.departingAt)))
+      return false
     return true
   })
 }

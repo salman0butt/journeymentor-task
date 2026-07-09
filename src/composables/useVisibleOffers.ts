@@ -12,6 +12,7 @@ export function useVisibleOffers(offers: Ref<Offer[]>) {
         stops: filters.stops,
         priceRange: filters.priceRange,
         airlines: filters.airlines,
+        departureTimes: filters.departureTimes,
       }),
       filters.sortKey,
     ),
