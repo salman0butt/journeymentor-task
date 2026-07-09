@@ -1,7 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import SearchForm from './components/SearchForm.vue'
+</script>
 
 <template>
   <div class="min-h-screen bg-slate-50 text-slate-900">
-    <h1 class="p-6 text-2xl font-semibold">Flight Search</h1>
+    <header class="border-b border-slate-200 bg-white">
+      <div class="mx-auto max-w-5xl px-4 py-4">
+        <h1 class="text-xl font-semibold">Flight Search</h1>
+      </div>
+    </header>
+    <main class="mx-auto max-w-5xl px-4 py-6">
+      <SearchForm />
+    </main>
   </div>
 </template>
