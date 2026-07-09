@@ -1,17 +1,16 @@
-import type { Offer, SortKey } from './types'
+import type { Offer, SortKey, DepartureBucket } from './types'
+import { DEPARTURE_BUCKETS } from './constants'
 
 export function stopsBucket(stops: number): 0 | 1 | 2 {
   return stops >= 2 ? 2 : (stops as 0 | 1)
 }
 
-export type DepartureBucket = 'morning' | 'afternoon' | 'evening' | 'night'
-
 export function departureBucket(iso: string): DepartureBucket {
   const h = Number(iso.slice(11, 13))
-  if (h >= 5 && h < 12) return 'morning'
-  if (h >= 12 && h < 17) return 'afternoon'
-  if (h >= 17 && h < 21) return 'evening'
-  return 'night'
+  const bucket = DEPARTURE_BUCKETS.find((b) =>
+    b.from < b.to ? h >= b.from && h < b.to : h >= b.from || h < b.to,
+  )
+  return bucket ? bucket.value : 'night'
 }
 
 export interface FilterCriteria {

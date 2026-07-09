@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { SortKey } from '../lib/types'
-import type { DepartureBucket } from '../lib/filterSort'
+import type { SortKey, DepartureBucket } from '../lib/types'
 
 export const useFiltersStore = defineStore(
   'filters',

@@ -1,25 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useFiltersStore } from '../stores/filters'
-import { priceBounds, airlineOptions, type DepartureBucket } from '../lib/filterSort'
-import type { Offer } from '../lib/types'
+import { priceBounds, airlineOptions } from '../lib/filterSort'
+import type { Offer, DepartureBucket } from '../lib/types'
+import { STOP_OPTIONS, DEPARTURE_BUCKETS } from '../lib/constants'
 
 const props = defineProps<{ offers: Offer[] }>()
 const filters = useFiltersStore()
 
 const bounds = computed(() => priceBounds(props.offers))
 const airlines = computed(() => airlineOptions(props.offers))
-const stopOptions: { value: 0 | 1 | 2; label: string }[] = [
-  { value: 0, label: 'Nonstop' },
-  { value: 1, label: '1 stop' },
-  { value: 2, label: '2+ stops' },
-]
-const departureTimeOptions: { value: DepartureBucket; label: string }[] = [
-  { value: 'morning', label: 'Morning (05–12)' },
-  { value: 'afternoon', label: 'Afternoon (12–17)' },
-  { value: 'evening', label: 'Evening (17–21)' },
-  { value: 'night', label: 'Night (21–05)' },
-]
 
 function toggleStop(v: 0 | 1 | 2) {
   filters.stops = filters.stops.includes(v)
@@ -46,7 +36,11 @@ const maxPrice = computed({
   <div class="space-y-6 rounded-xl border border-slate-200 bg-white p-4">
     <div>
       <h3 class="mb-2 text-sm font-semibold">Stops</h3>
-      <label v-for="o in stopOptions" :key="o.value" class="flex items-center gap-2 py-0.5 text-sm">
+      <label
+        v-for="o in STOP_OPTIONS"
+        :key="o.value"
+        class="flex items-center gap-2 py-0.5 text-sm"
+      >
         <input
           type="checkbox"
           :checked="filters.stops.includes(o.value)"
@@ -58,16 +52,16 @@ const maxPrice = computed({
     <div>
       <h3 class="mb-2 text-sm font-semibold">Departure time</h3>
       <label
-        v-for="o in departureTimeOptions"
-        :key="o.value"
+        v-for="b in DEPARTURE_BUCKETS"
+        :key="b.value"
         class="flex items-center gap-2 py-0.5 text-sm"
       >
         <input
           type="checkbox"
-          :checked="filters.departureTimes.includes(o.value)"
-          @change="toggleDepartureTime(o.value)"
+          :checked="filters.departureTimes.includes(b.value)"
+          @change="toggleDepartureTime(b.value)"
         />
-        {{ o.label }}
+        {{ b.label }} ({{ String(b.from).padStart(2, '0') }}–{{ String(b.to).padStart(2, '0') }})
       </label>
     </div>
     <div>

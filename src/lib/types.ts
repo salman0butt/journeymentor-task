@@ -56,3 +56,4 @@ export interface Place {
   cityName: string | null
 }
 export type SortKey = 'price' | 'duration' | 'departure'
+export type DepartureBucket = 'morning' | 'afternoon' | 'evening' | 'night'
