@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useDuffelClient } from '../composables/useDuffelClient'
-import { useDebounce } from '../composables/useDebounce'
+import { computed, ref, watch } from 'vue'
+import { usePlacesQuery } from '../composables/usePlacesQuery'
 import type { Place } from '../lib/types'
 
 const props = defineProps<{
@@ -12,25 +11,26 @@ const props = defineProps<{
 }>()
 const emit = defineEmits<{ 'update:modelValue': [string] }>()
 
-const client = useDuffelClient()
-const query = ref(props.modelValue)
-const suggestions = ref<Place[]>([])
+const query = ref(props.modelValue) // the text in the field / the search term
+const { data } = usePlacesQuery(query)
+const suggestions = computed<Place[]>(() => data.value ?? [])
 const open = ref(false)
-let controller: AbortController | null = null
 let lastEmitted = props.modelValue
 
-const fetchSuggestions = useDebounce(async (q: string) => {
-  controller?.abort()
-  controller = new AbortController()
-  try {
-    const results = await client.places(q, controller.signal)
-    if (query.value.trim() !== q) return
-    suggestions.value = results
-    open.value = suggestions.value.length > 0
-  } catch {
-    // aborted or failed — leave list as-is
-  }
-}, 300)
+function onInput(value: string) {
+  query.value = value // usePlacesQuery debounces this internally
+  const code = value.trim().toUpperCase()
+  lastEmitted = code
+  emit('update:modelValue', code)
+  open.value = value.trim().length >= 2
+}
+
+function select(place: Place) {
+  lastEmitted = place.iataCode
+  emit('update:modelValue', place.iataCode)
+  query.value = `${place.cityName ?? place.name} (${place.iataCode})`
+  open.value = false
+}
 
 watch(
   () => props.modelValue,
@@ -41,26 +41,6 @@ watch(
     }
   },
 )
-
-function onInput(value: string) {
-  query.value = value // display exactly what was typed
-  const code = value.trim().toUpperCase()
-  lastEmitted = code
-  emit('update:modelValue', code)
-  if (value.trim().length >= 2) {
-    fetchSuggestions(value.trim())
-  } else {
-    suggestions.value = []
-    open.value = false
-  }
-}
-
-function select(place: Place) {
-  lastEmitted = place.iataCode
-  emit('update:modelValue', place.iataCode)
-  query.value = `${place.cityName ?? place.name} (${place.iataCode})`
-  open.value = false
-}
 </script>
 
 <template>
@@ -75,7 +55,7 @@ function select(place: Place) {
     />
     <span v-if="error" class="text-xs text-red-600">{{ error }}</span>
     <ul
-      v-if="open"
+      v-if="open && suggestions.length"
       class="absolute top-full z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-slate-200 bg-white shadow-lg"
     >
       <li

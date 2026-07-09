@@ -1,23 +1,18 @@
-import { computed, onScopeDispose, ref, watch, type Ref } from 'vue'
+import { computed, ref, watch, type Ref } from 'vue'
 import { useQuery } from '@tanstack/vue-query'
 import { getPlaceSuggestions } from '../services/duffelService'
+import { useDebounce } from './useDebounce'
 
 const DEBOUNCE_MS = 300
 
 export function usePlacesQuery(query: Ref<string>) {
   const debounced = ref(query.value)
-  let timer: ReturnType<typeof setTimeout> | null = null
 
-  watch(query, (value) => {
-    if (timer) clearTimeout(timer)
-    timer = setTimeout(() => {
-      debounced.value = value
-    }, DEBOUNCE_MS)
-  })
+  const setDebounced = useDebounce((value: string) => {
+    debounced.value = value
+  }, DEBOUNCE_MS)
 
-  onScopeDispose(() => {
-    if (timer) clearTimeout(timer)
-  })
+  watch(query, (value) => setDebounced(value))
 
   return useQuery({
     queryKey: computed(() => ['places', debounced.value.trim()] as const),
