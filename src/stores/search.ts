@@ -45,18 +45,14 @@ export const useSearchStore = defineStore(
       await run({ ...criteria.value, departureDate: date })
     }
 
-    function reset() {
-      criteria.value = null
-      offers.value = []
-      status.value = 'idle'
-      error.value = null
-    }
-
-    return { criteria, offers, status, error, search, shiftDateTo, reset }
+    return { criteria, offers, status, error, search, shiftDateTo }
   },
   {
     persist: {
-      pick: ['criteria', 'offers', 'status'],
+      pick: ['criteria', 'offers'],
+      afterHydrate: (ctx) => {
+        ctx.store.status = ctx.store.offers.length > 0 ? 'success' : 'idle'
+      },
     },
   },
 )

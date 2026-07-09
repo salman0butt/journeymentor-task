@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { Offer } from '../lib/types'
 import { formatTime, formatDuration } from '../lib/format'
 
-defineProps<{ offer: Offer }>()
+const props = defineProps<{ offer: Offer }>()
+
+const visibleBaggage = computed(() => props.offer.baggage.filter((b) => b.quantity > 0))
 </script>
 
 <template>
@@ -32,11 +35,11 @@ defineProps<{ offer: Offer }>()
         </p>
       </template>
     </div>
-    <div v-if="offer.baggage.length" class="text-sm text-slate-600">
+    <div v-if="visibleBaggage.length" class="text-sm text-slate-600">
       <span class="font-medium">Baggage:</span>
-      <span v-for="(b, i) in offer.baggage" :key="i">
+      <span v-for="(b, i) in visibleBaggage" :key="i">
         {{ b.quantity }}× {{ b.type.replaceAll('_', ' ')
-        }}<span v-if="i < offer.baggage.length - 1">,</span></span
+        }}<span v-if="i < visibleBaggage.length - 1">,</span></span
       >
     </div>
   </div>

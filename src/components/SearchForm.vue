@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, watch } from 'vue'
 import PlaceAutocomplete from './PlaceAutocomplete.vue'
 import PassengerStepper from './PassengerStepper.vue'
 import CabinSelect from './CabinSelect.vue'
 import { useSearchStore } from '../stores/search'
 import { useHistoryStore } from '../stores/history'
+import { useFiltersStore } from '../stores/filters'
 import { validateCriteria, hasErrors, type ValidationErrors } from '../lib/validation'
 import type { SearchCriteria } from '../lib/types'
 
 const searchStore = useSearchStore()
 const historyStore = useHistoryStore()
+const filtersStore = useFiltersStore()
 
 function todayIso(): string {
   return new Date().toISOString().slice(0, 10)
@@ -31,12 +33,20 @@ const submitted = ref(false)
 
 const displayErrors = computed(() => (submitted.value ? errors.value : {}))
 
+watch(
+  () => searchStore.criteria,
+  (c) => {
+    if (c) Object.assign(form, c)
+  },
+)
+
 function submit() {
   submitted.value = true
   errors.value = validateCriteria(form, todayIso())
   if (hasErrors(errors.value)) return
   const criteria: SearchCriteria = { ...form }
   historyStore.record(criteria)
+  filtersStore.resetFilters()
   searchStore.search(criteria)
 }
 </script>
