@@ -21,23 +21,32 @@ const queryClient = new QueryClient({
   },
 })
 
-persistQueryClient({
-  queryClient,
-  persister: createSyncStoragePersister({ storage: window.localStorage }),
-  maxAge: 1000 * 60 * 60 * 24,
-  // Persist only successful offer searches (not place-suggestion queries) — keeps the
-  // reload "restore results" requirement without bloating storage with autocomplete
-  // caches. AND-ing with defaultShouldDehydrateQuery preserves TanStack's default
-  // status === 'success' gate: without it, a pending/fetching offers query gets its
-  // in-flight Promise dehydrated, JSON.stringify turns it into `{}`, and on the next
-  // reload hydrate() calls `.then()` on that `{}` and throws, causing
-  // persistQueryClientRestore to wipe the entire persisted cache.
-  dehydrateOptions: {
-    shouldDehydrateQuery: (query) =>
-      defaultShouldDehydrateQuery(query) &&
-      Array.isArray(query.queryKey) &&
-      query.queryKey[0] === 'offers',
-  },
-})
+const persister = createSyncStoragePersister({ storage: window.localStorage })
 
-createApp(App).use(pinia).use(VueQueryPlugin, { queryClient }).mount('#app')
+createApp(App)
+  .use(pinia)
+  .use(VueQueryPlugin, {
+    queryClient,
+    // Gates queries on `isRestoring` until the persisted cache finishes hydrating, so
+    // mounted components don't fire a redundant refetch before restore completes.
+    clientPersister: (qc) =>
+      persistQueryClient({
+        queryClient: qc,
+        persister,
+        maxAge: 1000 * 60 * 60 * 24,
+        // Persist only successful offer searches (not place-suggestion queries) — keeps the
+        // reload "restore results" requirement without bloating storage with autocomplete
+        // caches. AND-ing with defaultShouldDehydrateQuery preserves TanStack's default
+        // status === 'success' gate: without it, a pending/fetching offers query gets its
+        // in-flight Promise dehydrated, JSON.stringify turns it into `{}`, and on the next
+        // reload hydrate() calls `.then()` on that `{}` and throws, causing
+        // persistQueryClientRestore to wipe the entire persisted cache.
+        dehydrateOptions: {
+          shouldDehydrateQuery: (query) =>
+            defaultShouldDehydrateQuery(query) &&
+            Array.isArray(query.queryKey) &&
+            query.queryKey[0] === 'offers',
+        },
+      }),
+  })
+  .mount('#app')
