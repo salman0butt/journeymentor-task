@@ -15,16 +15,16 @@ function todayIso(): string {
   return new Date().toISOString().slice(0, 10)
 }
 
-const form = reactive<SearchCriteria>(
-  searchStore.criteria ?? {
+const form = reactive<SearchCriteria>({
+  ...(searchStore.criteria ?? {
     origin: '',
     destination: '',
     departureDate: todayIso(),
     returnDate: null,
     passengers: 1,
     cabin: 'economy',
-  },
-)
+  }),
+})
 
 const errors = ref<ValidationErrors>({})
 const submitted = ref(false)
