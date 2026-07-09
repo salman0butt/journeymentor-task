@@ -23,6 +23,8 @@ function replay(entry: HistoryEntry) {
     >
       {{ entry.label }}
     </button>
-    <button type="button" class="text-xs text-slate-400 hover:underline" @click="history.clear()">Clear</button>
+    <button type="button" class="text-xs text-slate-400 hover:underline" @click="history.clear()">
+      Clear
+    </button>
   </div>
 </template>

@@ -13,7 +13,8 @@ export interface FilterCriteria {
 export function applyFilters(offers: Offer[], f: FilterCriteria): Offer[] {
   return offers.filter((o) => {
     if (f.stops.length > 0 && !f.stops.includes(stopsBucket(o.stops))) return false
-    if (f.priceRange && (o.price.amount < f.priceRange[0] || o.price.amount > f.priceRange[1])) return false
+    if (f.priceRange && (o.price.amount < f.priceRange[0] || o.price.amount > f.priceRange[1]))
+      return false
     if (f.airlines.length > 0 && !f.airlines.includes(o.airline.iataCode)) return false
     return true
   })

@@ -2,14 +2,24 @@ export type CabinClass = 'economy' | 'premium_economy' | 'business' | 'first'
 export interface SearchCriteria {
   origin: string
   destination: string
-  departureDate: string      // YYYY-MM-DD
+  departureDate: string // YYYY-MM-DD
   returnDate: string | null
-  passengers: number         // adult count, >= 1
+  passengers: number // adult count, >= 1
   cabin: CabinClass
 }
-export interface Money { amount: number; currency: string }
-export interface Airline { name: string; iataCode: string; logoUrl: string | null }
-export interface Baggage { type: string; quantity: number }
+export interface Money {
+  amount: number
+  currency: string
+}
+export interface Airline {
+  name: string
+  iataCode: string
+  logoUrl: string | null
+}
+export interface Baggage {
+  type: string
+  quantity: number
+}
 export interface Segment {
   origin: string
   destination: string
@@ -40,5 +50,10 @@ export interface Offer {
   baggage: Baggage[]
 }
 export type SearchStatus = 'idle' | 'loading' | 'success' | 'empty' | 'error'
-export interface Place { type: string; name: string; iataCode: string; cityName: string | null }
+export interface Place {
+  type: string
+  name: string
+  iataCode: string
+  cityName: string | null
+}
 export type SortKey = 'price' | 'duration' | 'departure'

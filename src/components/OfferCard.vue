@@ -15,7 +15,12 @@ function stopsLabel(stops: number): string {
   <article class="rounded-xl border border-slate-200 bg-white p-4">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div class="flex items-center gap-3">
-        <img v-if="offer.airline.logoUrl" :src="offer.airline.logoUrl" :alt="offer.airline.name" class="h-8 w-8" />
+        <img
+          v-if="offer.airline.logoUrl"
+          :src="offer.airline.logoUrl"
+          :alt="offer.airline.name"
+          class="h-8 w-8"
+        />
         <div>
           <p class="font-medium">{{ offer.airline.name }}</p>
           <p class="text-sm text-slate-500">

@@ -36,7 +36,11 @@ const maxPrice = computed({
     <div>
       <h3 class="mb-2 text-sm font-semibold">Stops</h3>
       <label v-for="o in stopOptions" :key="o.value" class="flex items-center gap-2 py-0.5 text-sm">
-        <input type="checkbox" :checked="filters.stops.includes(o.value)" @change="toggleStop(o.value)" />
+        <input
+          type="checkbox"
+          :checked="filters.stops.includes(o.value)"
+          @change="toggleStop(o.value)"
+        />
         {{ o.label }}
       </label>
     </div>
@@ -54,10 +58,16 @@ const maxPrice = computed({
     <div v-if="airlines.length">
       <h3 class="mb-2 text-sm font-semibold">Airlines</h3>
       <label v-for="a in airlines" :key="a.iataCode" class="flex items-center gap-2 py-0.5 text-sm">
-        <input type="checkbox" :checked="filters.airlines.includes(a.iataCode)" @change="toggleAirline(a.iataCode)" />
+        <input
+          type="checkbox"
+          :checked="filters.airlines.includes(a.iataCode)"
+          @change="toggleAirline(a.iataCode)"
+        />
         {{ a.name }}
       </label>
     </div>
-    <button class="text-sm text-sky-600 hover:underline" @click="filters.resetFilters()">Clear filters</button>
+    <button class="text-sm text-sky-600 hover:underline" @click="filters.resetFilters()">
+      Clear filters
+    </button>
   </div>
 </template>

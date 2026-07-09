@@ -44,7 +44,12 @@ function submit() {
 <template>
   <form class="rounded-2xl bg-white p-4 shadow-sm sm:p-6" @submit.prevent="submit">
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <PlaceAutocomplete v-model="form.origin" label="From" placeholder="LHR" :error="displayErrors.origin" />
+      <PlaceAutocomplete
+        v-model="form.origin"
+        label="From"
+        placeholder="LHR"
+        :error="displayErrors.origin"
+      />
       <PlaceAutocomplete
         v-model="form.destination"
         label="To"
@@ -53,8 +58,14 @@ function submit() {
       />
       <label class="flex flex-col gap-1">
         <span class="text-sm font-medium text-slate-700">Departure</span>
-        <input v-model="form.departureDate" type="date" class="rounded-lg border border-slate-300 px-3 py-2" />
-        <span v-if="displayErrors.departureDate" class="text-xs text-red-600">{{ displayErrors.departureDate }}</span>
+        <input
+          v-model="form.departureDate"
+          type="date"
+          class="rounded-lg border border-slate-300 px-3 py-2"
+        />
+        <span v-if="displayErrors.departureDate" class="text-xs text-red-600">{{
+          displayErrors.departureDate
+        }}</span>
       </label>
       <label class="flex flex-col gap-1">
         <span class="text-sm font-medium text-slate-700">Return (optional)</span>
@@ -64,7 +75,9 @@ function submit() {
           class="rounded-lg border border-slate-300 px-3 py-2"
           @input="form.returnDate = ($event.target as HTMLInputElement).value || null"
         />
-        <span v-if="displayErrors.returnDate" class="text-xs text-red-600">{{ displayErrors.returnDate }}</span>
+        <span v-if="displayErrors.returnDate" class="text-xs text-red-600">{{
+          displayErrors.returnDate
+        }}</span>
       </label>
       <PassengerStepper v-model="form.passengers" />
       <CabinSelect v-model="form.cabin" />

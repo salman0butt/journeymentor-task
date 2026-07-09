@@ -19,12 +19,21 @@ function retry() {
 <template>
   <section>
     <LoadingState v-if="search.status === 'loading'" />
-    <ErrorState v-else-if="search.status === 'error'" :message="search.error ?? 'Search failed'" @retry="retry" />
+    <ErrorState
+      v-else-if="search.status === 'error'"
+      :message="search.error ?? 'Search failed'"
+      @retry="retry"
+    />
     <EmptyState v-else-if="search.status === 'empty'" />
-    <div v-else-if="search.status === 'success'" class="grid grid-cols-1 gap-4 lg:grid-cols-[16rem_1fr]">
+    <div
+      v-else-if="search.status === 'success'"
+      class="grid grid-cols-1 gap-4 lg:grid-cols-[16rem_1fr]"
+    >
       <aside>
         <details class="lg:hidden">
-          <summary class="cursor-pointer rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium">
+          <summary
+            class="cursor-pointer rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium"
+          >
             Filters
           </summary>
           <div class="mt-2"><FiltersPanel /></div>

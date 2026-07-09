@@ -2,9 +2,7 @@ import { parseDurationToMinutes } from './format'
 import type { SearchCriteria, Offer, NormalizedSlice, Segment, Baggage, Place } from './types'
 
 export function toOfferRequestBody(c: SearchCriteria) {
-  const slices = [
-    { origin: c.origin, destination: c.destination, departure_date: c.departureDate },
-  ]
+  const slices = [{ origin: c.origin, destination: c.destination, departure_date: c.departureDate }]
   if (c.returnDate) {
     slices.push({ origin: c.destination, destination: c.origin, departure_date: c.returnDate })
   }
@@ -65,7 +63,10 @@ export function mapOffer(raw: any): Offer {
       logoUrl: raw.owner?.logo_symbol_url ?? null,
     },
     slices,
-    totalDurationMinutes: slices.reduce((sum: number, s: NormalizedSlice) => sum + s.durationMinutes, 0),
+    totalDurationMinutes: slices.reduce(
+      (sum: number, s: NormalizedSlice) => sum + s.durationMinutes,
+      0,
+    ),
     departingAt: firstSeg.departingAt,
     arrivingAt: lastSeg.arrivingAt,
     stops: primary.stops,

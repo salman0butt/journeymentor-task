@@ -4,7 +4,12 @@ import { useDuffelClient } from '../composables/useDuffelClient'
 import { useDebounce } from '../composables/useDebounce'
 import type { Place } from '../lib/types'
 
-const props = defineProps<{ modelValue: string; label: string; placeholder?: string; error?: string }>()
+const props = defineProps<{
+  modelValue: string
+  label: string
+  placeholder?: string
+  error?: string
+}>()
 const emit = defineEmits<{ 'update:modelValue': [string] }>()
 
 const client = useDuffelClient()

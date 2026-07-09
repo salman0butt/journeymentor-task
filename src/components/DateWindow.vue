@@ -4,9 +4,7 @@ import { useSearchStore } from '../stores/search'
 import { dayWindow, formatDayLabel } from '../lib/format'
 
 const search = useSearchStore()
-const days = computed(() =>
-  search.criteria ? dayWindow(search.criteria.departureDate, 3) : [],
-)
+const days = computed(() => (search.criteria ? dayWindow(search.criteria.departureDate, 3) : []))
 </script>
 
 <template>
