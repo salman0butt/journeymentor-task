@@ -17,7 +17,7 @@ export function makeCriteriaSchema(today: string) {
       destination: z.string().min(1, 'Select a destination'),
       departureDate: z.string().min(1, 'Select a departure date'),
       returnDate: z.string().nullable(),
-      passengers: z.number().int().min(1, 'At least one passenger'),
+      passengers: z.number().min(1, 'At least one passenger'),
       cabin: z.enum(['economy', 'premium_economy', 'business', 'first']),
     })
     .superRefine((c, ctx) => {
@@ -70,7 +70,7 @@ const rawBaggageSchema = z
 
 const rawPassengerSchema = z
   .object({
-    baggages: z.array(rawBaggageSchema).optional(),
+    baggages: z.array(rawBaggageSchema).optional().nullable(),
   })
   .passthrough()
 
@@ -100,10 +100,10 @@ const rawSegmentSchema = z
     departing_at: z.string(),
     arriving_at: z.string(),
     duration: z.string(),
-    marketing_carrier: rawCarrierSchema.optional(),
+    marketing_carrier: rawCarrierSchema.optional().nullable(),
     marketing_carrier_flight_number: z.string().optional().nullable(),
     aircraft: rawAircraftSchema.optional().nullable(),
-    passengers: z.array(rawPassengerSchema).optional(),
+    passengers: z.array(rawPassengerSchema).optional().nullable(),
   })
   .passthrough()
 
@@ -129,7 +129,7 @@ export const rawOfferSchema = z
     id: z.string(),
     total_amount: z.string(),
     total_currency: z.string(),
-    owner: rawOwnerSchema,
+    owner: rawOwnerSchema.optional(),
     slices: z.array(rawSliceSchema),
   })
   .passthrough()
