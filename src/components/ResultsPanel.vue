@@ -23,7 +23,13 @@ function retry() {
     <EmptyState v-else-if="search.status === 'empty'" />
     <div v-else-if="search.status === 'success'" class="grid grid-cols-1 gap-4 lg:grid-cols-[16rem_1fr]">
       <aside>
-        <FiltersPanel />
+        <details class="lg:hidden">
+          <summary class="cursor-pointer rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium">
+            Filters
+          </summary>
+          <div class="mt-2"><FiltersPanel /></div>
+        </details>
+        <div class="hidden lg:block"><FiltersPanel /></div>
       </aside>
       <div>
         <div class="mb-3 flex items-center justify-between">
