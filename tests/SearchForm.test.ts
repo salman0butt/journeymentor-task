@@ -27,8 +27,8 @@ describe('SearchForm', () => {
     const spy = vi.spyOn(store, 'setCriteria')
     const wrapper = mount(SearchForm)
     const places = wrapper.findAllComponents(PlaceAutocomplete)
-    places[0].vm.$emit('update:modelValue', 'LHR') // origin
-    places[1].vm.$emit('update:modelValue', 'JFK') // destination
+    places[0].vm.$emit('update:modelValue', 'LHR')
+    places[1].vm.$emit('update:modelValue', 'JFK')
     await wrapper.vm.$nextTick()
     await wrapper.find('form').trigger('submit.prevent')
     expect(spy).toHaveBeenCalledTimes(1)

@@ -53,14 +53,13 @@ describe('usePlacesQuery', () => {
     const { queryRef } = mountWithHook('')
 
     queryRef.value = 'l'
-    await nextTick() // let the watcher register its debounce timer
+    await nextTick()
     vi.advanceTimersByTime(100)
     queryRef.value = 'lo'
     await nextTick()
     vi.advanceTimersByTime(100)
     queryRef.value = 'lon'
     await nextTick()
-    // Full debounce window elapses only after the last change.
     vi.advanceTimersByTime(300)
     vi.useRealTimers()
     await flushPromises()

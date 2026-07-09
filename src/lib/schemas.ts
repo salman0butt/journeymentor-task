@@ -1,15 +1,5 @@
 import { z } from 'zod'
 
-// ---------------------------------------------------------------------------
-// Form-criteria validation
-//
-// Mirrors src/lib/validation.ts exactly (same rules, same error message
-// strings) so swapping the imperative validator for this schema later is a
-// behavior-preserving change. Cross-field rules (origin !== destination,
-// departureDate >= today, returnDate >= departureDate) are expressed with
-// `.superRefine` so each issue can be attached to the right field path.
-// ---------------------------------------------------------------------------
-
 export function makeCriteriaSchema(today: string) {
   return z
     .object({
@@ -46,20 +36,6 @@ export function makeCriteriaSchema(today: string) {
 }
 
 export type CriteriaSchema = ReturnType<typeof makeCriteriaSchema>
-
-// ---------------------------------------------------------------------------
-// Duffel response schemas
-//
-// These validate ONLY the fields our mappers (src/lib/mappers.ts) actually
-// read. They are intentionally lenient:
-//  - fields the mappers guard with `?.` / `??` are `.optional()`/`.nullable()`
-//    here too (logo_symbol_url, aircraft, passengers, baggages, city_name,
-//    marketing_carrier_flight_number).
-//  - every nested object uses `.passthrough()` so additional fields Duffel
-//    sends (and that we don't care about) don't fail parsing.
-// This keeps parsing resilient to the real sandbox response growing new
-// fields, while still catching genuinely malformed shapes.
-// ---------------------------------------------------------------------------
 
 const rawBaggageSchema = z
   .object({

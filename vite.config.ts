@@ -6,10 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { searchOffers, placeSuggestions } from './api/_duffel.ts'
 
-// Dev-only fallback: serve /api/search and /api/places using the SAME Duffel
-// proxy logic as the Vercel serverless functions, so plain `vite` works locally
-// without the Vercel CLI. Applies to `serve` (dev) only — in production Vercel
-// serves /api itself, and this plugin is not part of the build.
+// Dev-only: serves /api/search and /api/places locally via the same Duffel proxy logic as the Vercel functions.
 function duffelDevApi(): Plugin {
   return {
     name: 'duffel-dev-api',

@@ -4,7 +4,7 @@ export interface SearchCriteria {
   destination: string
   departureDate: string // YYYY-MM-DD
   returnDate: string | null
-  passengers: number // adult count, >= 1
+  passengers: number
   cabin: CabinClass
 }
 export interface Money {

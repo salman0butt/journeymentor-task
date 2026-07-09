@@ -11,7 +11,7 @@ const props = defineProps<{
 }>()
 const emit = defineEmits<{ 'update:modelValue': [string] }>()
 
-const query = ref(props.modelValue) // the text in the field / the search term
+const query = ref(props.modelValue)
 const { data } = usePlacesQuery(query)
 const suggestions = computed<Place[]>(() => data.value ?? [])
 const open = ref(false)
