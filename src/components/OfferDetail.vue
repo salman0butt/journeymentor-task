@@ -32,7 +32,7 @@ defineProps<{ offer: Offer }>()
     </div>
     <div v-if="offer.baggage.length" class="text-sm text-slate-600">
       <span class="font-medium">Baggage:</span>
-      <span v-for="(b, i) in offer.baggage" :key="i"> {{ b.quantity }}× {{ b.type.replace('_', ' ') }}<span v-if="i < offer.baggage.length - 1">,</span></span>
+      <span v-for="(b, i) in offer.baggage" :key="i"> {{ b.quantity }}× {{ b.type.replaceAll('_', ' ') }}<span v-if="i < offer.baggage.length - 1">,</span></span>
     </div>
   </div>
 </template>

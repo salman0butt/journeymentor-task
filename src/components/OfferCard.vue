@@ -29,7 +29,11 @@ function stopsLabel(stops: number): string {
         <span class="text-lg font-semibold text-slate-900">{{ formatPrice(offer.price) }}</span>
       </div>
     </div>
-    <button class="mt-3 text-sm font-medium text-sky-600 hover:underline" @click="$emit('toggle')">
+    <button
+      type="button"
+      class="mt-3 text-sm font-medium text-sky-600 hover:underline"
+      @click="$emit('toggle')"
+    >
       {{ expanded ? 'Hide details' : 'View details' }}
     </button>
     <slot v-if="expanded" name="detail" />
