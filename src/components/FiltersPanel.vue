@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useSearchStore } from '../stores/search'
 import { useFiltersStore } from '../stores/filters'
 import { priceBounds, airlineOptions } from '../lib/filterSort'
+import type { Offer } from '../lib/types'
 
-const search = useSearchStore()
+const props = defineProps<{ offers: Offer[] }>()
 const filters = useFiltersStore()
 
-const bounds = computed(() => priceBounds(search.offers))
-const airlines = computed(() => airlineOptions(search.offers))
+const bounds = computed(() => priceBounds(props.offers))
+const airlines = computed(() => airlineOptions(props.offers))
 const stopOptions: { value: 0 | 1 | 2; label: string }[] = [
   { value: 0, label: 'Nonstop' },
   { value: 1, label: '1 stop' },

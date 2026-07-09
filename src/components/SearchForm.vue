@@ -47,7 +47,7 @@ function submit() {
   const criteria: SearchCriteria = { ...form }
   historyStore.record(criteria)
   filtersStore.resetFilters()
-  searchStore.search(criteria)
+  searchStore.setCriteria(criteria)
 }
 </script>
 

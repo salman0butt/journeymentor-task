@@ -10,7 +10,7 @@ const filters = useFiltersStore()
 
 function replay(entry: HistoryEntry) {
   filters.resetFilters()
-  search.search({ ...entry.criteria })
+  search.setCriteria({ ...entry.criteria })
 }
 </script>
 

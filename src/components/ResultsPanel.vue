@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { computed, toRef } from 'vue'
 import { useSearchStore } from '../stores/search'
-import { useFiltersStore } from '../stores/filters'
+import { useOffersQuery } from '../composables/useOffersQuery'
+import { useVisibleOffers } from '../composables/useVisibleOffers'
 import LoadingState from './states/LoadingState.vue'
 import EmptyState from './states/EmptyState.vue'
 import ErrorState from './states/ErrorState.vue'
@@ -9,26 +11,29 @@ import FiltersPanel from './FiltersPanel.vue'
 import SortControl from './SortControl.vue'
 
 const search = useSearchStore()
-const filters = useFiltersStore()
+const query = useOffersQuery(toRef(search, 'criteria'))
+
+const offers = computed(() => query.data.value ?? [])
+const { visibleOffers } = useVisibleOffers(offers)
 
 function retry() {
-  if (search.criteria) search.search(search.criteria)
+  query.refetch()
 }
 </script>
 
 <template>
   <section>
-    <LoadingState v-if="search.status === 'loading'" />
+    <p v-if="search.criteria == null" class="text-center text-slate-500">
+      Search for flights to see results.
+    </p>
     <ErrorState
-      v-else-if="search.status === 'error'"
-      :message="search.error ?? 'Search failed'"
+      v-else-if="query.isError.value"
+      :message="(query.error.value as Error)?.message ?? 'Search failed'"
       @retry="retry"
     />
-    <EmptyState v-else-if="search.status === 'empty'" />
-    <div
-      v-else-if="search.status === 'success'"
-      class="grid grid-cols-1 gap-4 lg:grid-cols-[16rem_1fr]"
-    >
+    <LoadingState v-else-if="query.isLoading.value" />
+    <EmptyState v-else-if="offers.length === 0" />
+    <div v-else class="grid grid-cols-1 gap-4 lg:grid-cols-[16rem_1fr]">
       <aside>
         <details class="lg:hidden">
           <summary
@@ -36,18 +41,17 @@ function retry() {
           >
             Filters
           </summary>
-          <div class="mt-2"><FiltersPanel /></div>
+          <div class="mt-2"><FiltersPanel :offers="offers" /></div>
         </details>
-        <div class="hidden lg:block"><FiltersPanel /></div>
+        <div class="hidden lg:block"><FiltersPanel :offers="offers" /></div>
       </aside>
       <div>
         <div class="mb-3 flex items-center justify-between">
-          <p class="text-sm text-slate-500">{{ filters.visibleOffers.length }} flights</p>
+          <p class="text-sm text-slate-500">{{ visibleOffers.length }} flights</p>
           <SortControl />
         </div>
-        <ResultsList :offers="filters.visibleOffers" />
+        <ResultsList :offers="visibleOffers" />
       </div>
     </div>
-    <p v-else class="text-center text-slate-500">Search for flights to see results.</p>
   </section>
 </template>
