@@ -16,11 +16,7 @@ export const useSearchStore = defineStore(
       if (criteria.value) criteria.value = { ...criteria.value, departureDate: date }
     }
 
-    function reset() {
-      criteria.value = null
-    }
-
-    return { criteria, setCriteria, shiftDateTo, reset }
+    return { criteria, setCriteria, shiftDateTo }
   },
   { persist: { pick: ['criteria'] } },
 )

@@ -49,7 +49,6 @@ export interface Offer {
   stops: number
   baggage: Baggage[]
 }
-export type SearchStatus = 'idle' | 'loading' | 'success' | 'empty' | 'error'
 export interface Place {
   type: string
   name: string
