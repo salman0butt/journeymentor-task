@@ -20,7 +20,7 @@ export function usePlacesQuery(query: Ref<string>) {
   })
 
   return useQuery({
-    queryKey: computed(() => ['places', debounced.value] as const),
+    queryKey: computed(() => ['places', debounced.value.trim()] as const),
     queryFn: ({ signal }) => getPlaceSuggestions(debounced.value.trim(), signal),
     enabled: computed(() => debounced.value.trim().length >= 2),
     staleTime: 1000 * 60,

@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query'
+import { VueQueryPlugin, QueryClient, defaultShouldDehydrateQuery } from '@tanstack/vue-query'
 import { persistQueryClient } from '@tanstack/query-persist-client-core'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import App from './App.vue'
@@ -25,11 +25,18 @@ persistQueryClient({
   queryClient,
   persister: createSyncStoragePersister({ storage: window.localStorage }),
   maxAge: 1000 * 60 * 60 * 24,
-  // Persist only offer searches (not place-suggestion queries) — keeps the reload
-  // "restore results" requirement without bloating storage with autocomplete caches.
+  // Persist only successful offer searches (not place-suggestion queries) — keeps the
+  // reload "restore results" requirement without bloating storage with autocomplete
+  // caches. AND-ing with defaultShouldDehydrateQuery preserves TanStack's default
+  // status === 'success' gate: without it, a pending/fetching offers query gets its
+  // in-flight Promise dehydrated, JSON.stringify turns it into `{}`, and on the next
+  // reload hydrate() calls `.then()` on that `{}` and throws, causing
+  // persistQueryClientRestore to wipe the entire persisted cache.
   dehydrateOptions: {
     shouldDehydrateQuery: (query) =>
-      Array.isArray(query.queryKey) && query.queryKey[0] === 'offers',
+      defaultShouldDehydrateQuery(query) &&
+      Array.isArray(query.queryKey) &&
+      query.queryKey[0] === 'offers',
   },
 })
 
