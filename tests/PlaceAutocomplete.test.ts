@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { ref } from 'vue'
-import PlaceAutocomplete from '../src/components/PlaceAutocomplete.vue'
+import PlaceAutocomplete from '../src/components/search/PlaceAutocomplete.vue'
 
 vi.mock('../src/composables/usePlacesQuery', () => ({ usePlacesQuery: vi.fn() }))
 import { usePlacesQuery } from '../src/composables/usePlacesQuery'

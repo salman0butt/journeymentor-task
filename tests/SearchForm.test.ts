@@ -6,8 +6,8 @@ import { setActivePinia, createPinia } from 'pinia'
 vi.mock('../src/composables/usePlacesQuery', () => ({
   usePlacesQuery: vi.fn(() => ({ data: ref([]) })),
 }))
-import SearchForm from '../src/components/SearchForm.vue'
-import PlaceAutocomplete from '../src/components/PlaceAutocomplete.vue'
+import SearchForm from '../src/components/search/SearchForm.vue'
+import PlaceAutocomplete from '../src/components/search/PlaceAutocomplete.vue'
 import { useSearchStore } from '../src/stores/search'
 
 beforeEach(() => setActivePinia(createPinia()))

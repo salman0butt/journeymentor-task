@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { Offer } from '../lib/types'
-import { formatTime, formatDuration } from '../lib/format'
+import type { Offer } from '../../lib/types'
+import { formatTime, formatDuration } from '../../lib/format'
 
 const props = defineProps<{ offer: Offer }>()
 

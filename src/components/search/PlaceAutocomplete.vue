@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { usePlacesQuery } from '../composables/usePlacesQuery'
-import type { Place } from '../lib/types'
+import { usePlacesQuery } from '../../composables/usePlacesQuery'
+import type { Place } from '../../lib/types'
 
 const props = defineProps<{
   modelValue: string

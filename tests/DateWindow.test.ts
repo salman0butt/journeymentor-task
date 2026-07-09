@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { setActivePinia, createPinia } from 'pinia'
-import DateWindow from '../src/components/DateWindow.vue'
+import DateWindow from '../src/components/search/DateWindow.vue'
 import { useSearchStore } from '../src/stores/search'
 
 beforeEach(() => setActivePinia(createPinia()))

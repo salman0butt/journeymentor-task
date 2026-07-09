@@ -3,11 +3,11 @@ import { reactive, ref, computed, watch } from 'vue'
 import PlaceAutocomplete from './PlaceAutocomplete.vue'
 import PassengerStepper from './PassengerStepper.vue'
 import CabinSelect from './CabinSelect.vue'
-import { useSearchStore } from '../stores/search'
-import { useHistoryStore } from '../stores/history'
-import { useFiltersStore } from '../stores/filters'
-import { validateCriteria, hasErrors, type ValidationErrors } from '../lib/validation'
-import type { SearchCriteria } from '../lib/types'
+import { useSearchStore } from '../../stores/search'
+import { useHistoryStore } from '../../stores/history'
+import { useFiltersStore } from '../../stores/filters'
+import { validateCriteria, hasErrors, type ValidationErrors } from '../../lib/validation'
+import type { SearchCriteria } from '../../lib/types'
 
 const searchStore = useSearchStore()
 const historyStore = useHistoryStore()

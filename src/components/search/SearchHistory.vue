@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useHistoryStore } from '../stores/history'
-import { useSearchStore } from '../stores/search'
-import { useFiltersStore } from '../stores/filters'
-import type { HistoryEntry } from '../stores/history'
+import { useHistoryStore } from '../../stores/history'
+import { useSearchStore } from '../../stores/search'
+import { useFiltersStore } from '../../stores/filters'
+import type { HistoryEntry } from '../../stores/history'
 
 const history = useHistoryStore()
 const search = useSearchStore()

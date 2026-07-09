@@ -5,7 +5,7 @@ import { setActivePinia, createPinia } from 'pinia'
 
 vi.mock('../src/composables/useOffersQuery', () => ({ useOffersQuery: vi.fn() }))
 import { useOffersQuery } from '../src/composables/useOffersQuery'
-import ResultsPanel from '../src/components/ResultsPanel.vue'
+import ResultsPanel from '../src/components/results/ResultsPanel.vue'
 import { useSearchStore } from '../src/stores/search'
 import type { Offer } from '../src/lib/types'
 

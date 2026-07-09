@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useSearchStore } from '../stores/search'
-import { dayWindow, formatDayLabel } from '../lib/format'
+import { useSearchStore } from '../../stores/search'
+import { dayWindow, formatDayLabel } from '../../lib/format'
 
 const search = useSearchStore()
 const days = computed(() => (search.criteria ? dayWindow(search.criteria.departureDate, 3) : []))

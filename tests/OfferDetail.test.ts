@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import OfferDetail from '../src/components/OfferDetail.vue'
+import OfferDetail from '../src/components/results/OfferDetail.vue'
 import type { Offer } from '../src/lib/types'
 
 const offer: Offer = {

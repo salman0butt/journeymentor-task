@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import SearchForm from './components/SearchForm.vue'
-import ResultsPanel from './components/ResultsPanel.vue'
-import DateWindow from './components/DateWindow.vue'
-import SearchHistory from './components/SearchHistory.vue'
+import SearchForm from './components/search/SearchForm.vue'
+import ResultsPanel from './components/results/ResultsPanel.vue'
+import DateWindow from './components/search/DateWindow.vue'
+import SearchHistory from './components/search/SearchHistory.vue'
 </script>
 
 <template>

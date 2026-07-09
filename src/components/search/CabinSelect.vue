@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { CabinClass } from '../lib/types'
-import { CABIN_OPTIONS } from '../lib/constants'
+import type { CabinClass } from '../../lib/types'
+import { CABIN_OPTIONS } from '../../lib/constants'
 defineProps<{ modelValue: CabinClass }>()
 defineEmits<{ 'update:modelValue': [CabinClass] }>()
 </script>

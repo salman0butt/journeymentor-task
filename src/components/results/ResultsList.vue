@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import OfferCard from './OfferCard.vue'
 import OfferDetail from './OfferDetail.vue'
-import type { Offer } from '../lib/types'
+import type { Offer } from '../../lib/types'
 
 defineProps<{ offers: Offer[] }>()
 const expandedId = ref<string | null>(null)

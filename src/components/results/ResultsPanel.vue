@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
-import { useSearchStore } from '../stores/search'
-import { useOffersQuery } from '../composables/useOffersQuery'
-import { useVisibleOffers } from '../composables/useVisibleOffers'
-import LoadingState from './states/LoadingState.vue'
-import EmptyState from './states/EmptyState.vue'
-import ErrorState from './states/ErrorState.vue'
+import { useSearchStore } from '../../stores/search'
+import { useOffersQuery } from '../../composables/useOffersQuery'
+import { useVisibleOffers } from '../../composables/useVisibleOffers'
+import LoadingState from '../states/LoadingState.vue'
+import EmptyState from '../states/EmptyState.vue'
+import ErrorState from '../states/ErrorState.vue'
 import ResultsList from './ResultsList.vue'
-import FiltersPanel from './FiltersPanel.vue'
-import SortControl from './SortControl.vue'
+import FiltersPanel from '../filters/FiltersPanel.vue'
+import SortControl from '../filters/SortControl.vue'
 
 const search = useSearchStore()
 const query = useOffersQuery(toRef(search, 'criteria'))

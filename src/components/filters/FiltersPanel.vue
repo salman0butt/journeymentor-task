@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useFiltersStore } from '../stores/filters'
-import { priceBounds, airlineOptions } from '../lib/filterSort'
-import type { Offer, DepartureBucket } from '../lib/types'
-import { STOP_OPTIONS, DEPARTURE_BUCKETS } from '../lib/constants'
+import { useFiltersStore } from '../../stores/filters'
+import { priceBounds, airlineOptions } from '../../lib/filterSort'
+import type { Offer, DepartureBucket } from '../../lib/types'
+import { STOP_OPTIONS, DEPARTURE_BUCKETS } from '../../lib/constants'
 
 const props = defineProps<{ offers: Offer[] }>()
 const filters = useFiltersStore()

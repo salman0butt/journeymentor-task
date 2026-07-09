@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Offer } from '../lib/types'
-import { formatTime, formatDuration, formatPrice } from '../lib/format'
+import type { Offer } from '../../lib/types'
+import { formatTime, formatDuration, formatPrice } from '../../lib/format'
 
 defineProps<{ offer: Offer; expanded: boolean }>()
 defineEmits<{ toggle: [] }>()

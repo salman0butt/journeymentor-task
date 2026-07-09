@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import OfferCard from '../src/components/OfferCard.vue'
+import OfferCard from '../src/components/results/OfferCard.vue'
 import type { Offer } from '../src/lib/types'
 
 const offer: Offer = {

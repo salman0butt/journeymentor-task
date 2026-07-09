@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useFiltersStore } from '../stores/filters'
-import type { SortKey } from '../lib/types'
+import { useFiltersStore } from '../../stores/filters'
+import type { SortKey } from '../../lib/types'
 const filters = useFiltersStore()
 const options: { value: SortKey; label: string }[] = [
   { value: 'price', label: 'Price (low → high)' },
