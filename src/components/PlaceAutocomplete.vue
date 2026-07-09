@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useDuffelClient } from '../composables/useDuffelClient'
 import { useDebounce } from '../composables/useDebounce'
 import type { Place } from '../lib/types'
@@ -12,17 +12,30 @@ const query = ref(props.modelValue)
 const suggestions = ref<Place[]>([])
 const open = ref(false)
 let controller: AbortController | null = null
+let lastEmitted = props.modelValue
 
 const fetchSuggestions = useDebounce(async (q: string) => {
   controller?.abort()
   controller = new AbortController()
   try {
-    suggestions.value = await client.places(q, controller.signal)
+    const results = await client.places(q, controller.signal)
+    if (query.value.trim() !== q) return
+    suggestions.value = results
     open.value = suggestions.value.length > 0
   } catch {
     // aborted or failed — leave list as-is
   }
 }, 300)
+
+watch(
+  () => props.modelValue,
+  (v) => {
+    if (v !== lastEmitted) {
+      query.value = v
+      lastEmitted = v
+    }
+  },
+)
 
 function onInput(value: string) {
   query.value = value
@@ -34,6 +47,7 @@ function onInput(value: string) {
 }
 
 function select(place: Place) {
+  lastEmitted = place.iataCode
   emit('update:modelValue', place.iataCode)
   query.value = `${place.cityName ?? place.name} (${place.iataCode})`
   open.value = false
