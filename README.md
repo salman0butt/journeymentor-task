@@ -9,6 +9,9 @@ of half-building a long feature list.
 
 `https://journeymentor-task.vercel.app`
 
+<img width="2880" height="2176" alt="journeymentor-task vercel app_ (1)" src="https://github.com/user-attachments/assets/aa8aa390-34c9-4326-ba48-c66b3db662f6" />
+
+
 ## Running it locally
 
 You'll need Node 18+ and a free Duffel sandbox token (grab one at
