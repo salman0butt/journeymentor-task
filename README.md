@@ -56,7 +56,7 @@ npm run dev               # http://localhost:5173
 
 That's all you need. `npm run dev` runs Vite plus a tiny dev-only middleware that stands in for
 the serverless API locally, so you don't need the Vercel CLI just to try it. If you'd rather
-exercise the real Vercel functions, `npm run dev:vercel` runs `vercel dev` instead.
+exercise the real Vercel functions, `npm run dev:vercel` runs `vercel dev` instead. keep in mind you have installed the vercel on you local.
 
 A note on the token: it's server-side only. It's read inside `/api` (and the dev middleware),
 never imported into any client code, and `.env` is git-ignored so it can't be committed. In
