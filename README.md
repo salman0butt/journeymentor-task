@@ -17,8 +17,6 @@ This project is a small Vue 3 flight-search app built for the Journey Mentor fro
 - TypeScript is used to keep the search flow, API handling, and UI state safer and easier to maintain.
 - Pinia was chosen because the app only needs a modest amount of shared state, and it integrates cleanly with Vue 3 without adding unnecessary boilerplate.
 - Duffel requests are handled through a small proxy or server-side layer because direct browser calls are blocked by CORS. This keeps the token out of the client bundle.
-- The autocomplete bonus, departure-time sorting, departure-time filtering, and persisted search history were left out to keep the scope focused on the core experience within the expected time budget.
-- The primary focus was on the core search flow, results list, sorting, filtering, offer details, nearby-date browsing, and persistence because they cover the main assignment requirements directly.
 
 ## Local development
 
