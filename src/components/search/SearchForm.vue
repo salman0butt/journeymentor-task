@@ -71,7 +71,7 @@ function submit() {
         <input
           v-model="form.departureDate"
           type="date"
-          class="rounded-lg border border-slate-300 px-3 py-2"
+          class="cursor-pointer rounded-lg border border-slate-300 px-3 py-2"
         />
         <span v-if="displayErrors.departureDate" class="text-xs text-red-600">{{
           displayErrors.departureDate
@@ -82,7 +82,7 @@ function submit() {
         <input
           :value="form.returnDate ?? ''"
           type="date"
-          class="rounded-lg border border-slate-300 px-3 py-2"
+          class="cursor-pointer rounded-lg border border-slate-300 px-3 py-2"
           @input="form.returnDate = ($event.target as HTMLInputElement).value || null"
         />
         <span v-if="displayErrors.returnDate" class="text-xs text-red-600">{{
@@ -94,7 +94,7 @@ function submit() {
     </div>
     <button
       type="submit"
-      class="mt-4 w-full rounded-lg bg-sky-600 px-4 py-2.5 font-medium text-white hover:bg-sky-700 sm:w-auto"
+      class="mt-4 w-full cursor-pointer rounded-lg bg-sky-600 px-4 py-2.5 font-medium text-white hover:bg-sky-700 sm:w-auto"
     >
       Search flights
     </button>

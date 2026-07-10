@@ -7,7 +7,7 @@ defineEmits<{ retry: [] }>()
     <p class="text-red-700">{{ message }}</p>
     <button
       type="button"
-      class="mt-3 rounded-lg bg-red-600 px-4 py-2 text-white"
+      class="mt-3 cursor-pointer rounded-lg bg-red-600 px-4 py-2 text-white"
       @click="$emit('retry')"
     >
       Retry

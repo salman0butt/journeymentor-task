@@ -12,7 +12,7 @@ function set(n: number) {
     <div class="flex items-center gap-3">
       <button
         type="button"
-        class="h-9 w-9 rounded-lg border border-slate-300"
+        class="h-9 w-9 cursor-pointer rounded-lg border border-slate-300"
         @click="set(props.modelValue - 1)"
       >
         −
@@ -20,7 +20,7 @@ function set(n: number) {
       <span class="w-6 text-center">{{ props.modelValue }}</span>
       <button
         type="button"
-        class="h-9 w-9 rounded-lg border border-slate-300"
+        class="h-9 w-9 cursor-pointer rounded-lg border border-slate-300"
         @click="set(props.modelValue + 1)"
       >
         +

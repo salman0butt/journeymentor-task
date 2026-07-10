@@ -21,12 +21,16 @@ function replay(entry: HistoryEntry) {
       v-for="(entry, index) in history.entries"
       :key="index"
       type="button"
-      class="rounded-full border border-slate-300 px-3 py-1 text-xs hover:border-sky-400 hover:text-sky-700"
+      class="cursor-pointer rounded-full border border-slate-300 px-3 py-1 text-xs hover:border-sky-400 hover:text-sky-700"
       @click="replay(entry)"
     >
       {{ entry.label }}
     </button>
-    <button type="button" class="text-xs text-slate-400 hover:underline" @click="history.clear()">
+    <button
+      type="button"
+      class="cursor-pointer text-xs text-slate-400 hover:underline"
+      @click="history.clear()"
+    >
       Clear
     </button>
   </div>

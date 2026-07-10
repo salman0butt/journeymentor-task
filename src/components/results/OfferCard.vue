@@ -36,7 +36,7 @@ function stopsLabel(stops: number): string {
     </div>
     <button
       type="button"
-      class="mt-3 text-sm font-medium text-sky-600 hover:underline"
+      class="mt-3 cursor-pointer text-sm font-medium text-sky-600 hover:underline"
       @click="$emit('toggle')"
     >
       {{ expanded ? 'Hide details' : 'View details' }}

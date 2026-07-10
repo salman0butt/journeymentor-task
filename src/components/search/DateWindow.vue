@@ -13,7 +13,7 @@ const days = computed(() => (search.criteria ? dayWindow(search.criteria.departu
       v-for="day in days"
       :key="day"
       type="button"
-      class="shrink-0 rounded-lg border px-3 py-2 text-sm"
+      class="shrink-0 cursor-pointer rounded-lg border px-3 py-2 text-sm"
       :class="
         day === search.criteria?.departureDate
           ? 'border-sky-600 bg-sky-50 font-semibold text-sky-700'

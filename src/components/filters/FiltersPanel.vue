@@ -39,10 +39,11 @@ const maxPrice = computed({
       <label
         v-for="o in STOP_OPTIONS"
         :key="o.value"
-        class="flex items-center gap-2 py-0.5 text-sm"
+        class="flex cursor-pointer items-center gap-2 py-0.5 text-sm"
       >
         <input
           type="checkbox"
+          class="cursor-pointer"
           :checked="filters.stops.includes(o.value)"
           @change="toggleStop(o.value)"
         />
@@ -54,10 +55,11 @@ const maxPrice = computed({
       <label
         v-for="b in DEPARTURE_BUCKETS"
         :key="b.value"
-        class="flex items-center gap-2 py-0.5 text-sm"
+        class="flex cursor-pointer items-center gap-2 py-0.5 text-sm"
       >
         <input
           type="checkbox"
+          class="cursor-pointer"
           :checked="filters.departureTimes.includes(b.value)"
           @change="toggleDepartureTime(b.value)"
         />
@@ -68,7 +70,7 @@ const maxPrice = computed({
       <h3 class="mb-2 text-sm font-semibold">Max price: {{ maxPrice }}</h3>
       <input
         type="range"
-        class="w-full"
+        class="w-full cursor-pointer"
         :min="bounds[0]"
         :max="bounds[1]"
         :value="maxPrice"
@@ -77,16 +79,24 @@ const maxPrice = computed({
     </div>
     <div v-if="airlines.length">
       <h3 class="mb-2 text-sm font-semibold">Airlines</h3>
-      <label v-for="a in airlines" :key="a.iataCode" class="flex items-center gap-2 py-0.5 text-sm">
+      <label
+        v-for="a in airlines"
+        :key="a.iataCode"
+        class="flex cursor-pointer items-center gap-2 py-0.5 text-sm"
+      >
         <input
           type="checkbox"
+          class="cursor-pointer"
           :checked="filters.airlines.includes(a.iataCode)"
           @change="toggleAirline(a.iataCode)"
         />
         {{ a.name }}
       </label>
     </div>
-    <button class="text-sm text-sky-600 hover:underline" @click="filters.resetFilters()">
+    <button
+      class="cursor-pointer text-sm text-sky-600 hover:underline"
+      @click="filters.resetFilters()"
+    >
       Clear filters
     </button>
   </div>
