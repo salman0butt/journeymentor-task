@@ -13,21 +13,21 @@ export function makeCriteriaSchema(today: string) {
     .superRefine((c, ctx) => {
       if (c.origin && c.destination && c.origin === c.destination) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           message: 'Origin and destination must differ',
           path: ['destination'],
         })
       }
       if (c.departureDate && c.departureDate < today) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           message: 'Departure cannot be in the past',
           path: ['departureDate'],
         })
       }
       if (c.returnDate && c.departureDate && c.returnDate < c.departureDate) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           message: 'Return cannot be before departure',
           path: ['returnDate'],
         })
@@ -37,103 +37,77 @@ export function makeCriteriaSchema(today: string) {
 
 export type CriteriaSchema = ReturnType<typeof makeCriteriaSchema>
 
-const rawBaggageSchema = z
-  .object({
-    type: z.string(),
-    quantity: z.number(),
-  })
-  .passthrough()
+const rawBaggageSchema = z.looseObject({
+  type: z.string(),
+  quantity: z.number(),
+})
 
-const rawPassengerSchema = z
-  .object({
-    baggages: z.array(rawBaggageSchema).optional().nullable(),
-  })
-  .passthrough()
+const rawPassengerSchema = z.looseObject({
+  baggages: z.array(rawBaggageSchema).optional().nullable(),
+})
 
-const rawAirportSchema = z
-  .object({
-    iata_code: z.string(),
-  })
-  .passthrough()
+const rawAirportSchema = z.looseObject({
+  iata_code: z.string(),
+})
 
-const rawCarrierSchema = z
-  .object({
-    name: z.string(),
-    iata_code: z.string(),
-  })
-  .passthrough()
+const rawCarrierSchema = z.looseObject({
+  name: z.string(),
+  iata_code: z.string(),
+})
 
-const rawAircraftSchema = z
-  .object({
-    name: z.string(),
-  })
-  .passthrough()
+const rawAircraftSchema = z.looseObject({
+  name: z.string(),
+})
 
-const rawSegmentSchema = z
-  .object({
-    origin: rawAirportSchema,
-    destination: rawAirportSchema,
-    departing_at: z.string(),
-    arriving_at: z.string(),
-    duration: z.string(),
-    marketing_carrier: rawCarrierSchema.optional().nullable(),
-    marketing_carrier_flight_number: z.string().optional().nullable(),
-    aircraft: rawAircraftSchema.optional().nullable(),
-    passengers: z.array(rawPassengerSchema).optional().nullable(),
-  })
-  .passthrough()
+const rawSegmentSchema = z.looseObject({
+  origin: rawAirportSchema,
+  destination: rawAirportSchema,
+  departing_at: z.string(),
+  arriving_at: z.string(),
+  duration: z.string(),
+  marketing_carrier: rawCarrierSchema.optional().nullable(),
+  marketing_carrier_flight_number: z.string().optional().nullable(),
+  aircraft: rawAircraftSchema.optional().nullable(),
+  passengers: z.array(rawPassengerSchema).optional().nullable(),
+})
 
-const rawSliceSchema = z
-  .object({
-    origin: rawAirportSchema,
-    destination: rawAirportSchema,
-    duration: z.string(),
-    segments: z.array(rawSegmentSchema),
-  })
-  .passthrough()
+const rawSliceSchema = z.looseObject({
+  origin: rawAirportSchema,
+  destination: rawAirportSchema,
+  duration: z.string(),
+  segments: z.array(rawSegmentSchema),
+})
 
-const rawOwnerSchema = z
-  .object({
-    name: z.string(),
-    iata_code: z.string(),
-    logo_symbol_url: z.string().optional().nullable(),
-  })
-  .passthrough()
+const rawOwnerSchema = z.looseObject({
+  name: z.string(),
+  iata_code: z.string(),
+  logo_symbol_url: z.string().optional().nullable(),
+})
 
-export const rawOfferSchema = z
-  .object({
-    id: z.string(),
-    total_amount: z.string(),
-    total_currency: z.string(),
-    owner: rawOwnerSchema.optional(),
-    slices: z.array(rawSliceSchema),
-  })
-  .passthrough()
+export const rawOfferSchema = z.looseObject({
+  id: z.string(),
+  total_amount: z.string(),
+  total_currency: z.string(),
+  owner: rawOwnerSchema.optional(),
+  slices: z.array(rawSliceSchema),
+})
 
-export const offerSearchResponseSchema = z
-  .object({
-    data: z
-      .object({
-        offers: z.array(rawOfferSchema),
-      })
-      .passthrough(),
-  })
-  .passthrough()
+export const offerSearchResponseSchema = z.looseObject({
+  data: z.looseObject({
+    offers: z.array(rawOfferSchema),
+  }),
+})
 
-export const rawPlaceSchema = z
-  .object({
-    type: z.string(),
-    name: z.string(),
-    iata_code: z.string(),
-    city_name: z.string().optional().nullable(),
-  })
-  .passthrough()
+export const rawPlaceSchema = z.looseObject({
+  type: z.string(),
+  name: z.string(),
+  iata_code: z.string(),
+  city_name: z.string().optional().nullable(),
+})
 
-export const placesResponseSchema = z
-  .object({
-    data: z.array(rawPlaceSchema),
-  })
-  .passthrough()
+export const placesResponseSchema = z.looseObject({
+  data: z.array(rawPlaceSchema),
+})
 
 export type RawOffer = z.infer<typeof rawOfferSchema>
 export type RawPlace = z.infer<typeof rawPlaceSchema>
