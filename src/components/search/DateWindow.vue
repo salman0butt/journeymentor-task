@@ -4,7 +4,11 @@ import { useSearchStore } from '../../stores/search'
 import { dayWindow, formatDayLabel } from '../../lib/format'
 
 const search = useSearchStore()
-const days = computed(() => (search.criteria ? dayWindow(search.criteria.departureDate, 3) : []))
+const days = computed(() => {
+  if (!search.criteria) return []
+  const today = new Date().toISOString().slice(0, 10)
+  return dayWindow(search.criteria.departureDate, 3).filter((day) => day >= today)
+})
 </script>
 
 <template>
