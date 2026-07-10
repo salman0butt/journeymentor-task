@@ -27,14 +27,6 @@ This project is a small Vue 3 flight-search app built for the Journey Mentor fro
    ```
 3. Start the development server with `npm run dev`.
 
-### Deployment
-
-Add the live deployment URL here once the app is published.
-
-A small single-page flight search built with Vue 3 and the Duffel sandbox API. You fill in a
-route, dates, passengers and cabin, and it gives you back a list of real offers you can sort,
-filter, and drill into. I tried to keep the scope tight and finish the pieces properly instead
-of half-building a long feature list.
 
 ## Live demo
 
