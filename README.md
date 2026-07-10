@@ -7,7 +7,7 @@ of half-building a long feature list.
 
 ## Live demo
 
-`https://…` _(add after deploying; see DEPLOYMENT.md)_
+`[https://…](https://journeymentor-task.vercel.app/)`
 
 ## Running it locally
 
